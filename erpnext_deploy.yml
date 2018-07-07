@@ -1,0 +1,80 @@
+version: "3.1"
+services:
+  mariadb:
+    image: mariadb:10.3
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
+    volumes:
+      - ./conf/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
+      - $MYSQL_DATA:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+    networks:
+      - default
+
+  redis-cache:
+    image: redis:alpine
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./conf/redis_cache.conf:/etc/conf.d/redis.conf:ro
+    command: ["redis-server", "/etc/conf.d/redis.conf"]
+    networks:
+      - default
+
+  redis-queue:
+    image: redis:alpine
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./conf/redis_queue.conf:/etc/conf.d/redis.conf:ro
+    command: ["redis-server", "/etc/conf.d/redis.conf"]
+    networks:
+      - default
+
+  redis-socketio:
+    image: redis:alpine
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./conf/redis_socketio.conf:/etc/conf.d/redis.conf:ro
+    command: ["redis-server", "/etc/conf.d/redis.conf"]
+    networks:
+      - default
+
+  frappe:
+    image: erpnext_deploy:alpha
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
+    volumes:
+      - ./conf/Procfile:/home/frappe/frappe-bench/Procfile
+      - $FRAPPE_SITES:/home/frappe/frappe-bench/sites
+      - $FRAPPE_LOGS:/home/frappe/frappe-bench/logs
+      - ./setup_sites.sh:/home/frappe/setup_sites.sh:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    command: ["/home/frappe/setup_sites.sh"]
+    depends_on:
+      - mariadb
+      - redis_cache
+      - redis_queue
+      - redis_socketio
+    networks:
+      - default
