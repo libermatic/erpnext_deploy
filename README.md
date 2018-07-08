@@ -9,3 +9,7 @@ Apparently `.env` doesn't work with `docker stack`, so if using `docker stack de
 ```sh
 export $(cat .env)
 ```
+
+## TODO
+
+- Simplify environment and volume setup
