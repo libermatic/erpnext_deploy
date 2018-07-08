@@ -11,12 +11,10 @@ services:
     volumes:
       - ./conf/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
       - $MYSQL_DATA:/var/lib/mysql
-    ports:
-      - "3307:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
     networks:
-      - default
+      - frappe_net
 
   redis-cache:
     image: redis:alpine
@@ -28,7 +26,7 @@ services:
       - ./conf/redis_cache.conf:/etc/conf.d/redis.conf:ro
     command: ["redis-server", "/etc/conf.d/redis.conf"]
     networks:
-      - default
+      - frappe_net
 
   redis-queue:
     image: redis:alpine
@@ -40,7 +38,7 @@ services:
       - ./conf/redis_queue.conf:/etc/conf.d/redis.conf:ro
     command: ["redis-server", "/etc/conf.d/redis.conf"]
     networks:
-      - default
+      - frappe_net
 
   redis-socketio:
     image: redis:alpine
@@ -52,7 +50,7 @@ services:
       - ./conf/redis_socketio.conf:/etc/conf.d/redis.conf:ro
     command: ["redis-server", "/etc/conf.d/redis.conf"]
     networks:
-      - default
+      - frappe_net
 
   frappe:
     image: erpnext_deploy:alpha
@@ -70,11 +68,14 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    command: ["/home/frappe/setup_sites.sh"]
+    command: ["/bin/bash", "/home/frappe/setup_sites.sh"]
     depends_on:
       - mariadb
       - redis_cache
       - redis_queue
       - redis_socketio
     networks:
-      - default
+      - frappe_net
+
+networks:
+  frappe_net:
