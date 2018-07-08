@@ -2,6 +2,10 @@
 
 ERPNext deployment using `bench` easy install script.
 
-## Todo
+## Usage
 
-- setup production
+Apparently `.env` doesn't work with `docker stack`, so if using `docker stack deploy` use
+
+```sh
+export $(cat .env)
+```

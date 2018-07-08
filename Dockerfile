@@ -32,7 +32,8 @@ RUN wget https://raw.githubusercontent.com/frappe/bench/master/playbooks/install
 RUN pip install ansible; apt-get -y install \
     fail2ban \
     nginx \
-    supervisor
+    supervisor \
+    mariadb-client
 
 USER frappe
 WORKDIR /home/frappe
