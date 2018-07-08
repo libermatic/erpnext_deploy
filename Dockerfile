@@ -40,8 +40,12 @@ WORKDIR /home/frappe
 
 # Install and setup bench
 RUN sudo pip install -e bench-repo; \
-    bench init frappe-bench --skip-redis-config-generation
+    bench init \
+        --skip-redis-config-generation \
+        --frappe-path https://github.com/frappe/frappe \
+        --frappe-branch master \
+        frappe-bench
 
 # Install erpnext
 RUN cd frappe-bench; \
-    bench get-app https://github.com/frappe/erpnext
+    bench get-app https://github.com/frappe/erpnext --branch master
