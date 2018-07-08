@@ -1,5 +1,7 @@
 data/
 logs/
 sites/
-certs/
+letsencrypt/
 .env
+conf/nginx.conf
+conf/Procfile

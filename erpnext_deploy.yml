@@ -62,6 +62,7 @@ services:
         constraints: [node.role == manager]
     volumes:
       - ./conf/Procfile:/home/frappe/frappe-bench/Procfile
+      - ./conf/nginx.conf:/home/frappe/frappe-bench/config/nginx.conf
       - $FRAPPE_SITES:/home/frappe/frappe-bench/sites
       - $FRAPPE_LOGS:/home/frappe/frappe-bench/logs
       - ./setup_sites.sh:/home/frappe/setup_sites.sh:ro
