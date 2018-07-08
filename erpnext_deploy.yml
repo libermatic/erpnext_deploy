@@ -65,6 +65,7 @@ services:
       - ./conf/nginx.conf:/home/frappe/frappe-bench/config/nginx.conf
       - $FRAPPE_SITES:/home/frappe/frappe-bench/sites
       - $FRAPPE_LOGS:/home/frappe/frappe-bench/logs
+      - $LETSENCRYPT:/etc/letsencrypt
       - ./setup_sites.sh:/home/frappe/setup_sites.sh:ro
     ports:
       - "80:80"
