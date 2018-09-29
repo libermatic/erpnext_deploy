@@ -1,7 +1,8 @@
 data/
-logs/
-sites/
+bench/
 letsencrypt/
 .env
+conf/supervisor.conf
 conf/nginx.conf
 conf/Procfile
+conf/common_site_config.json

@@ -1,4 +1,6 @@
 certs/
 data/
-logs/
-sites/
+bench/
+letsencrypt/
+conf/
+.git/

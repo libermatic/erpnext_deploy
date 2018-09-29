@@ -1,51 +1,10 @@
-FROM debian:stretch-slim
+FROM libermatic/bench_docker
 
 MAINTAINER Sun Howwrongbum <sun@libermatic.com>
 
-# Install build dependencies
-RUN apt-get -y update; apt-get -y install \
-    python-minimal \
-    build-essential \
-    python-setuptools \
-    wget \
-    sudo \
-    git \
-    cron
-
-# Create user frappe
-RUN adduser --disabled-password frappe; \
-    usermod -aG sudo frappe; \
-    echo "%sudo  ALL=(ALL)  NOPASSWD: ALL" > /etc/sudoers.d/sudoers
-
-# Clone bench and skip mariadb and redis
-RUN git clone --depth 1 https://github.com/frappe/bench /tmp/.bench; \
-    sed -i '/role: mariadb/d' /tmp/.bench/playbooks/site.yml; \
-    sed -i '/role: redis/d' /tmp/.bench/playbooks/site.yml; \
-    cp -r /tmp/.bench /home/frappe/bench-repo; \
-    chown -R frappe:frappe /home/frappe/bench-repo
-
-# Run easy install script
-RUN wget https://raw.githubusercontent.com/frappe/bench/master/playbooks/install.py -O /tmp/install.py; \
-    python /tmp/install.py --user frappe --without-site --without-bench-setup
-
-# Install production dependencies
-RUN pip install ansible; apt-get -y install \
-    fail2ban \
-    nginx \
-    supervisor \
-    mariadb-client
+USER root
+ENV TINI_VERSION v0.18.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
 
 USER frappe
-WORKDIR /home/frappe
-
-# Install and setup bench
-RUN sudo pip install -e bench-repo; \
-    bench init \
-        --skip-redis-config-generation \
-        --frappe-path https://github.com/frappe/frappe \
-        --frappe-branch master \
-        frappe-bench
-
-# Install erpnext
-RUN cd frappe-bench; \
-    bench get-app https://github.com/frappe/erpnext --branch master

@@ -13,3 +13,7 @@ export $(cat .env)
 ## TODO
 
 - Simplify environment and volume setup
+
+## Notes
+
+- remove `tini` when docker version updates to 18.06.0
