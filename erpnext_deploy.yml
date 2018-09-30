@@ -24,7 +24,7 @@ services:
       restart_policy:
         condition: on-failure
     volumes:
-      - ./conf/redis_cache.conf:/etc/conf.d/redis.conf:ro
+      - ./conf/redis/redis_cache.conf:/etc/conf.d/redis.conf:ro
     command: ["redis-server", "/etc/conf.d/redis.conf"]
     networks:
       - frappe_net
@@ -36,7 +36,7 @@ services:
       restart_policy:
         condition: on-failure
     volumes:
-      - ./conf/redis_queue.conf:/etc/conf.d/redis.conf:ro
+      - ./conf/redis/redis_queue.conf:/etc/conf.d/redis.conf:ro
     command: ["redis-server", "/etc/conf.d/redis.conf"]
     networks:
       - frappe_net
@@ -48,7 +48,7 @@ services:
       restart_policy:
         condition: on-failure
     volumes:
-      - ./conf/redis_socketio.conf:/etc/conf.d/redis.conf:ro
+      - ./conf/redis/redis_socketio.conf:/etc/conf.d/redis.conf:ro
     command: ["redis-server", "/etc/conf.d/redis.conf"]
     networks:
       - frappe_net
@@ -62,7 +62,7 @@ services:
       placement:
         constraints: [node.role == manager]
     volumes:
-      - ./conf:/home/frappe/conf
+      - ./conf/frappe:/home/frappe/conf:ro
       - $FRAPPE_BENCH:/home/frappe/frappe-bench
       - $LETSENCRYPT:/etc/letsencrypt
       - ./startup.sh:/home/frappe/startup.sh:ro
