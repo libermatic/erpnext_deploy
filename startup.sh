@@ -13,20 +13,19 @@ if [ ! -d $HOME/frappe-bench/apps/frappe ]; then
   bench get-app https://github.com/frappe/erpnext --branch master;
   cp $HOME/conf/Procfile $HOME/frappe-bench/Procfile;
   cp $HOME/conf/common_site_config.json $HOME/frappe-bench/sites/common_site_config.json;
-
-  # required because `bench setup production` fails trying to start supervisord
-  # instead of supervisor
-  sudo service supervisor start;
-  sudo bench setup production --yes frappe;
-  cp $HOME/conf/supervisor.conf $HOME/frappe-bench/config/supervisor.conf;
-  cp $HOME/conf/nginx.conf $HOME/frappe-bench/config/nginx.conf;
-  sudo service supervisor stop;
 fi
 
+# required because `bench setup production` fails trying to start supervisord
+# instead of supervisor
+sudo service supervisor start;
+sudo bench setup production --yes frappe;
+cp $HOME/conf/supervisor.conf $HOME/frappe-bench/config/supervisor.conf;
+cp $HOME/conf/nginx.conf $HOME/frappe-bench/config/nginx.conf;
+sudo service supervisor stop;
 
 # because users created by frappe are set to a fixed ip. this sets new frappe
 # sites host created in previous container instance to subnet.
-sudo wait-for-it mariadb:3306 -s -t 1 -- \
+sudo wait-for-it mariadb:3306 -s -t 30 -- \
   sudo mysql -u root -p${MYSQL_ROOT_PASSWORD} -h mariadb < $HOME/conf/init.sql;
 
 sudo service nginx start;

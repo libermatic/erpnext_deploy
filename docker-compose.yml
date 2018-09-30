@@ -54,6 +54,7 @@ services:
 
   frappe:
     build: ./
+    image: erpnext_deploy
     deploy:
       replicas: 1
       restart_policy:
@@ -70,7 +71,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    entrypoint: ["/sbin/tini", "--", "./startup.sh"]
+    entrypoint: ["/sbin/tini", "--", "../startup.sh"]
     depends_on:
       - mariadb
       - redis-cache
