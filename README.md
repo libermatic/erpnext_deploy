@@ -10,6 +10,11 @@ Apparently `.env` doesn't work with `docker stack`, so if using `docker stack de
 export $(cat .env)
 ```
 
-## TODO
+## Notes
 
-- Simplify environment and volume setup
+- remove `tini` when docker version updates to 18.06.0
+
+## Attributions
+
+- [https://github.com/frappe/frappe_docker](https://github.com/frappe/frappe_docker)
+- [https://github.com/pipech/erpnext-docker-debian](https://github.com/pipech/erpnext-docker-debian)

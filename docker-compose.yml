@@ -9,7 +9,7 @@ services:
       placement:
         constraints: [node.role == manager]
     volumes:
-      - ./conf/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
+      - ./conf/mariadb/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
       - $MYSQL_DATA:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
@@ -23,7 +23,7 @@ services:
       restart_policy:
         condition: on-failure
     volumes:
-      - ./conf/redis_cache.conf:/etc/conf.d/redis.conf:ro
+      - ./conf/redis/redis_cache.conf:/etc/conf.d/redis.conf:ro
     command: ["redis-server", "/etc/conf.d/redis.conf"]
     networks:
       - frappe_net
@@ -35,7 +35,7 @@ services:
       restart_policy:
         condition: on-failure
     volumes:
-      - ./conf/redis_queue.conf:/etc/conf.d/redis.conf:ro
+      - ./conf/redis/redis_queue.conf:/etc/conf.d/redis.conf:ro
     command: ["redis-server", "/etc/conf.d/redis.conf"]
     networks:
       - frappe_net
@@ -47,13 +47,13 @@ services:
       restart_policy:
         condition: on-failure
     volumes:
-      - ./conf/redis_socketio.conf:/etc/conf.d/redis.conf:ro
+      - ./conf/redis/redis_socketio.conf:/etc/conf.d/redis.conf:ro
     command: ["redis-server", "/etc/conf.d/redis.conf"]
     networks:
       - frappe_net
 
   frappe:
-    image: erpnext_deploy:alpha
+    build: ./
     deploy:
       replicas: 1
       restart_policy:
@@ -61,23 +61,27 @@ services:
       placement:
         constraints: [node.role == manager]
     volumes:
-      - ./conf/Procfile:/home/frappe/frappe-bench/Procfile
-      - ./conf/nginx.conf:/home/frappe/frappe-bench/config/nginx.conf
-      - $FRAPPE_SITES:/home/frappe/frappe-bench/sites
-      - $FRAPPE_LOGS:/home/frappe/frappe-bench/logs
+      - ./conf/frappe:/home/frappe/conf:ro
+      - $FRAPPE_BENCH:/home/frappe/frappe-bench
       - $LETSENCRYPT:/etc/letsencrypt
-      - ./setup_sites.sh:/home/frappe/setup_sites.sh:ro
+      - ./startup.sh:/home/frappe/startup.sh:ro
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
     ports:
       - "80:80"
       - "443:443"
-    command: ["/bin/bash", "/home/frappe/setup_sites.sh"]
+    entrypoint: ["/sbin/tini", "--", "./startup.sh"]
     depends_on:
       - mariadb
-      - redis_cache
-      - redis_queue
-      - redis_socketio
+      - redis-cache
+      - redis-queue
+      - redis-socketio
     networks:
       - frappe_net
 
 networks:
   frappe_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16

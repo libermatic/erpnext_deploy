@@ -1,7 +1,8 @@
 data/
-logs/
-sites/
+bench/
 letsencrypt/
 .env
-conf/nginx.conf
-conf/Procfile
+conf/frappe/supervisor.conf
+conf/frappe/nginx.conf
+conf/frappe/Procfile
+conf/frappe/common_site_config.json
