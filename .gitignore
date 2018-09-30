@@ -2,7 +2,7 @@ data/
 bench/
 letsencrypt/
 .env
-conf/supervisor.conf
-conf/nginx.conf
-conf/Procfile
-conf/common_site_config.json
+conf/frappe/supervisor.conf
+conf/frappe/nginx.conf
+conf/frappe/Procfile
+conf/frappe/common_site_config.json
