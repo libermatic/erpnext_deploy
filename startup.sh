@@ -23,9 +23,11 @@ if [ ! -d $HOME/frappe-bench/apps/frappe ]; then
   sudo service supervisor stop;
 fi
 
+
 # because users created by frappe are set to a fixed ip. this sets new frappe
 # sites host created in previous container instance to subnet.
-sudo mysql -u root -p${MYSQL_ROOT_PASSWORD} -h mariadb < $HOME/conf/init.sql
+sudo wait-for-it mariadb:3306 -s -t 1 -- \
+  sudo mysql -u root -p${MYSQL_ROOT_PASSWORD} -h mariadb < $HOME/conf/init.sql;
 
 sudo service nginx start;
 sudo service supervisor start;

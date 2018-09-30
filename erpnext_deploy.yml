@@ -70,7 +70,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    entrypoint: ["/tini", "--", "./startup.sh"]
+    entrypoint: ["/sbin/tini", "--", "./startup.sh"]
     depends_on:
       - mariadb
       - redis-cache
