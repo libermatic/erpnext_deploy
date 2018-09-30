@@ -9,7 +9,7 @@ services:
       placement:
         constraints: [node.role == manager]
     volumes:
-      - ./conf/maraidb/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
+      - ./conf/mariadb/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
       - ./conf/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - $MYSQL_DATA:/var/lib/mysql
     environment:
@@ -69,6 +69,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "8000:8000"
     entrypoint: ["/tini", "--", "./startup.sh"]
     depends_on:
       - mariadb
