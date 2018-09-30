@@ -10,7 +10,6 @@ services:
         constraints: [node.role == manager]
     volumes:
       - ./conf/mariadb/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
-      - ./conf/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - $MYSQL_DATA:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
@@ -66,10 +65,11 @@ services:
       - $FRAPPE_BENCH:/home/frappe/frappe-bench
       - $LETSENCRYPT:/etc/letsencrypt
       - ./startup.sh:/home/frappe/startup.sh:ro
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
     ports:
       - "80:80"
       - "443:443"
-      - "8000:8000"
     entrypoint: ["/tini", "--", "./startup.sh"]
     depends_on:
       - mariadb

@@ -18,6 +18,9 @@ if [ ! -d $HOME/frappe-bench/apps/frappe ]; then
   # instead of supervisor
 fi
 
+# because users created by frappe are set to a fixed ip
+sudo mysql -u root -p${MYSQL_ROOT_PASSWORD} -h mariadb < $HOME/conf/init.sql
+
 # cd $HOME/frappe-bench;
 # sudo service supervisor start;
 # sudo bench setup production --yes frappe;
