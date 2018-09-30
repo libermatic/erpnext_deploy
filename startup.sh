@@ -16,26 +16,18 @@ if [ ! -d $HOME/frappe-bench/apps/frappe ]; then
 
   # required because `bench setup production` fails trying to start supervisord
   # instead of supervisor
+  sudo service supervisor start;
+  sudo bench setup production --yes frappe;
+  cp $HOME/conf/supervisor.conf $HOME/frappe-bench/config/supervisor.conf;
+  cp $HOME/conf/nginx.conf $HOME/frappe-bench/config/nginx.conf;
+  sudo service supervisor stop;
 fi
 
-# because users created by frappe are set to a fixed ip
+# because users created by frappe are set to a fixed ip. this sets new frappe
+# sites host created in previous container instance to subnet.
 sudo mysql -u root -p${MYSQL_ROOT_PASSWORD} -h mariadb < $HOME/conf/init.sql
 
-# cd $HOME/frappe-bench;
-# sudo service supervisor start;
-# sudo bench setup production --yes frappe;
-# bench config dns_multitenant on;
-# cp $HOME/conf/supervisor.conf $HOME/frappe-bench/config/supervisor.conf;
-# cp $HOME/conf/nginx.conf $HOME/frappe-bench/config/nginx.conf;
-# sudo service supervisor restart;
-# sudo service nginx restart;
-# if [ ! -f $HOME/frappe-bench/config/nginx.conf ]; then
-# fi
-# if [ ! -f $HOME/frappe-bench/config/supervisor.conf ]; then
-# fi
-
-# sudo service nginx start;
-# sudo /usr/bin/supervisord -c $HOME/frappe-bench/config/supervisor.conf
-# sudo service supervisor start
+sudo service nginx start;
+sudo service supervisor start;
 
 tail -f /dev/null
