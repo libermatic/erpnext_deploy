@@ -77,7 +77,6 @@ services:
       - "9000:9000"
       - "6787:6787"
     entrypoint: ["/sbin/tini", "--", "../entrypoint.sh"]
-    command: ["start"]
     depends_on:
       - mariadb
       - redis-cache

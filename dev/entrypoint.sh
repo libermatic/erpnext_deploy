@@ -22,4 +22,8 @@ fi
 sudo wait-for-it mariadb:3306 -s -t 30 -- \
   sudo mysql -u root -p${MYSQL_ROOT_PASSWORD} -h mariadb < $HOME/conf/init.sql;
 
-exec /usr/local/bin/bench "$@"
+if [ "$#" -ne 0 ]; then
+  exec /usr/local/bin/bench "$@"
+else
+  tail -f /dev/null
+fi
