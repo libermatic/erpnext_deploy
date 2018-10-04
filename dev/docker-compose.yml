@@ -1,0 +1,94 @@
+version: "3.1"
+services:
+  mariadb:
+    image: mariadb:10.3
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
+    volumes:
+      - ../conf/mariadb/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
+      - $MYSQL_DATA:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+    networks:
+      - frappe_net
+
+  redis-cache:
+    image: redis:alpine
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ../conf/redis/redis_cache.conf:/etc/conf.d/redis.conf:ro
+    command: ["redis-server", "/etc/conf.d/redis.conf"]
+    networks:
+      - frappe_net
+
+  redis-queue:
+    image: redis:alpine
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ../conf/redis/redis_queue.conf:/etc/conf.d/redis.conf:ro
+    command: ["redis-server", "/etc/conf.d/redis.conf"]
+    networks:
+      - frappe_net
+
+  redis-socketio:
+    image: redis:alpine
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ../conf/redis/redis_socketio.conf:/etc/conf.d/redis.conf:ro
+    command: ["redis-server", "/etc/conf.d/redis.conf"]
+    networks:
+      - frappe_net
+
+  frappe:
+    build: ./
+    image: erpnext_deploy:dev
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
+    tty: true
+    stdin_open: true
+    volumes:
+      - ../conf/frappe/Procfile:/home/frappe/conf/Procfile:ro
+      - ../conf/frappe/init.sql:/home/frappe/conf/init.sql:ro
+      - ./common_site_config.json:/home/frappe/conf/common_site_config.json:ro
+      - $FRAPPE_BENCH:/home/frappe/frappe-bench
+      - $LETSENCRYPT:/etc/letsencrypt
+      - ./entrypoint.sh:/home/frappe/entrypoint.sh:ro
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+    ports:
+      - "8000:8000"
+      - "9000:9000"
+      - "6787:6787"
+    entrypoint: ["/sbin/tini", "--", "../entrypoint.sh"]
+    command: ["start"]
+    depends_on:
+      - mariadb
+      - redis-cache
+      - redis-queue
+      - redis-socketio
+    networks:
+      - frappe_net
+
+networks:
+  frappe_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
