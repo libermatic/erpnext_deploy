@@ -1,0 +1,7 @@
+[
+  {
+    "pattern": "s/erpnext.hr.doctype.employee.employee/erpnext.setup.doctype.employee.employee/",
+    "app": "healthcare",
+    "filepath": "healthcare/doctype/patient_appointment/patient_appointment.py"
+  }
+]

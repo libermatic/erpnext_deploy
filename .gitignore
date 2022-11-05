@@ -1,8 +1,2 @@
-data/
-bench/
-letsencrypt/
-.env
-conf/frappe/supervisor.conf
-conf/frappe/nginx.conf
-conf/frappe/Procfile
-conf/frappe/common_site_config.json
+.vscode
+.venv

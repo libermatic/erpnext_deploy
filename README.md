@@ -1,40 +1,62 @@
-# erpnext_deploy
+### apps in image
 
-ERPNext deployment using `bench` easy install script.
+- frappe
+- erpnext
+- payments
+- posx
+- healthcare
 
-## Environment variables
+### Configuration
 
-- `MYSQL_ROOT_PASSWORD`
-- `MYSQL_DATA`
-- `FRAPPE_BENCH`
-- `LETSENCRYPT` Not required during development
+#### _apps.json_
 
-## Usage
+List of apps (other than _erpnext_) to install. eg.
 
-Apparently `.env` doesn't work with `docker stack`, so if using `docker stack deploy` use
-
-```sh
-export $(cat .env)
+```json
+[
+  {
+    "app": "sentry",
+    "version": "v13.0.1",
+    "repo": "https://github.com/libermatic/frappe_sentry.git"
+  }
+]
 ```
 
-## Development
+#### _nginx/patches.json_
 
-The _dev_ directory contains necessary files. Add an `.env` file defining the directories
+Patches to be `sed` in upstream code in the _nginx_ container. eg.
 
-Set alias to run `bench` from host.
-
-```sh
-alias bench="docker run -it $(docker ps -qf ancestor=erpnext_deploy:dev) bench"
+```json
+[
+  {
+    "pattern": "s/el.getBoundingClientRect()/\\!el ? 0 : el.getBoundingClientRect()/",
+    "app": "frappe",
+    "filepath": "public/js/frappe/views/image/image_view.js"
+  }
+]
 ```
 
-`docker-compose up -d` within _dev_. Do `bench start` and others as usual.
-`docker-compose down` when done.
+#### _worker/patches.json_
 
-## Notes
+Patches to be `sed` in upstream code in the _worker_ container. eg.
 
-- remove `tini` when docker version updates to 18.06.0
+```json
+[
+  {
+    "pattern": "s/flt(ref_doc.grand_total)/flt(ref_doc.rounded_total or ref_doc.grand_total)/",
+    "app": "erpnext",
+    "filepath": "accounts/doctype/payment_request/payment_request.py"
+  }
+]
+```
 
-## Attributions
+### Usage
 
-- [https://github.com/frappe/frappe_docker](https://github.com/frappe/frappe_docker)
-- [https://github.com/pipech/erpnext-docker-debian](https://github.com/pipech/erpnext-docker-debian)
+#### Update Version
+
+- Change upstream versions in _cloudbuild.yaml_
+- Change custom app versions in _apps.json_
+
+#### Patches
+
+- Add/remove patches in appropriate _patches.json_

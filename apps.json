@@ -1,0 +1,17 @@
+[
+  {
+    "app": "healthcare",
+    "version": "v0.1.4",
+    "repo": "https://github.com/frappe/health.git"
+  },
+  {
+    "app": "posx",
+    "version": "v14.0.0",
+    "repo": "https://github.com/libermatic/posx.git"
+  },
+  {
+    "app": "iah",
+    "version": "v14.0.0",
+    "repo": "https://github.com/libermatic/iah.git"
+  }
+]
