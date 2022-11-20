@@ -39,8 +39,8 @@ steps:
     - asia.gcr.io/$PROJECT_ID/erpnext-nginx:$TAG_NAME
 
 substitutions:
-  _FRAPPE_VERSION: v14.14.3
-  _ERPNEXT_VERSION: v14.6.0
+  _FRAPPE_VERSION: v14.15.0
+  _ERPNEXT_VERSION: v14.7.0
   _REGISTRY_PREFIX: frappe
 
 timeout: 1800s
