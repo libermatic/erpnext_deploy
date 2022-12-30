@@ -19,7 +19,7 @@ def main():
                     ),
                     shell=True,
                 )
-                print("Patched: {app}/{filepath}".format(**kwargs))
+                print("Patched: {app}/{filepath} {description}".format(**kwargs))
 
 
 if __name__ == "__main__":
