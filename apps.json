@@ -1,17 +1,22 @@
 [
   {
-    "app": "healthcare",
-    "version": "v0.1.4",
-    "repo": "https://github.com/frappe/health.git"
+    "url": "https://github.com/frappe/payments.git",
+    "branch": "develop"
   },
   {
-    "app": "posx",
-    "version": "v14.0.0",
-    "repo": "https://github.com/libermatic/posx.git"
+    "url": "https://github.com/frappe/erpnext.git",
+    "branch": "v14.17.1"
   },
   {
-    "app": "iah",
-    "version": "v14.3.0",
-    "repo": "https://github.com/libermatic/iah.git"
+    "url": "https://github.com/frappe/health.git",
+    "branch": "v0.1.4"
+  },
+  {
+    "url": "https://github.com/libermatic/posx.git",
+    "branch": "v14.0.0"
+  },
+  {
+    "url": "https://github.com/libermatic/iah.git",
+    "branch": "v14.3.0"
   }
 ]

@@ -1,14 +1,14 @@
 [
   {
-    "description": "Fix incorrect import path",
+    "message": "Fix incorrect import path",
     "pattern": "s/erpnext.hr.doctype.employee.employee/erpnext.setup.doctype.employee.employee/",
     "app": "healthcare",
-    "filepath": "healthcare/doctype/patient_appointment/patient_appointment.py"
+    "path": "healthcare/doctype/patient_appointment/patient_appointment.py"
   },
   {
-    "description": "Fix unable to cancel some documents",
+    "message": "Fix unable to cancel some documents",
     "pattern": "s/frappe.delete_doc('Patient Medical Record', record, force=1)/frappe.delete_doc('Patient Medical Record', record, force=1, ignore_permissions=True)/",
     "app": "healthcare",
-    "filepath": "healthcare/doctype/patient_history_settings/patient_history_settings.py"
+    "path": "healthcare/doctype/patient_history_settings/patient_history_settings.py"
   }
 ]

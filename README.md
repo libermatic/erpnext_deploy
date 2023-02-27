@@ -1,30 +1,36 @@
-### apps in image
+# erpnext_deploy
+
+The repo tags and as a consequence the built image tags follow upstream **frappe**
+version. The `major`.`minor` versions will always remain the same. The `patch` version
+is independent of upstream and set incrementally here.
+
+## apps in image
 
 - frappe
 - erpnext
 - payments
 - posx
 - healthcare
+- iah
 
-### Configuration
+## Configuration
 
-#### _apps.json_
+### _apps.json_
 
-List of apps (other than _erpnext_) to install. eg.
+List of apps to install. `branch` can also be a tag. eg.
 
 ```json
 [
   {
-    "app": "sentry",
-    "version": "v13.0.1",
-    "repo": "https://github.com/libermatic/frappe_sentry.git"
+    "repo": "https://github.com/libermatic/frappe_sentry.git",
+    "branch": "v13.0.1"
   }
 ]
 ```
 
-#### _nginx/patches.json_
+### patches.json\_
 
-Patches to be `sed` in upstream code in the _nginx_ container. eg.
+Patches to be `sed` in upstream code. eg.
 
 ```json
 [
@@ -36,27 +42,13 @@ Patches to be `sed` in upstream code in the _nginx_ container. eg.
 ]
 ```
 
-#### _worker/patches.json_
+## Usage
 
-Patches to be `sed` in upstream code in the _worker_ container. eg.
+### Update Version
 
-```json
-[
-  {
-    "pattern": "s/flt(ref_doc.grand_total)/flt(ref_doc.rounded_total or ref_doc.grand_total)/",
-    "app": "erpnext",
-    "filepath": "accounts/doctype/payment_request/payment_request.py"
-  }
-]
-```
+- Change **frappe** version in _cloudbuild.yaml_
+- Change app versions in _apps.json_
 
-### Usage
+### Patches
 
-#### Update Version
-
-- Change upstream versions in _cloudbuild.yaml_
-- Change custom app versions in _apps.json_
-
-#### Patches
-
-- Add/remove patches in appropriate _patches.json_
+- Add/remove patches in _patches.json_

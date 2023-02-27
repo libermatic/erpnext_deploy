@@ -1,51 +1,25 @@
 steps:
 - name: gcr.io/cloud-builders/docker
-  id: worker
-  waitFor: ['-']
   entrypoint: bash
   args:
   - -c
-  - "cp apps.json setup.py patch.py worker && docker build \
-    --build-arg=BUILD_VERSION=$TAG_NAME \
-    --build-arg=FRAPPE_VERSION=$_FRAPPE_VERSION \
-    --build-arg=ERPNEXT_VERSION=$_ERPNEXT_VERSION \
-    --build-arg=REGISTRY_PREFIX=$_REGISTRY_PREFIX \
-    --tag=asia.gcr.io/$PROJECT_ID/erpnext-worker \
-    worker"
-- name: gcr.io/cloud-builders/docker
-  waitFor: ['worker']
-  args:
-    - tag
-    - asia.gcr.io/$PROJECT_ID/erpnext-worker
-    - asia.gcr.io/$PROJECT_ID/erpnext-worker:$TAG_NAME
-- name: gcr.io/cloud-builders/docker
-  id: nginx
-  waitFor: ['-']
-  entrypoint: bash
-  args:
-  - -c
-  - "cp apps.json setup.py patch.py nginx && docker build \
-    --build-arg=BUILD_VERSION=$TAG_NAME \
-    --build-arg=FRAPPE_VERSION=$_FRAPPE_VERSION \
-    --build-arg=ERPNEXT_VERSION=$_ERPNEXT_VERSION \
-    --build-arg=REGISTRY_PREFIX=$_REGISTRY_PREFIX \
-    --tag=asia.gcr.io/$PROJECT_ID/erpnext-nginx \
-    nginx"
-- name: gcr.io/cloud-builders/docker
-  waitFor: ['nginx']
-  args:
-    - tag
-    - asia.gcr.io/$PROJECT_ID/erpnext-nginx
-    - asia.gcr.io/$PROJECT_ID/erpnext-nginx:$TAG_NAME
+  - |
+    git clone --depth 1 --branch $_BUILD_BRANCH https://github.com/sunhoww/frappe_docker.git && \
+    docker build \
+      --build-arg=FRAPPE_PATH=https://github.com/frappe/frappe \
+      --build-arg=FRAPPE_BRANCH=$_FRAPPE_VERSION \
+      --build-arg=APPS_JSON_BASE64=$(base64 -w 0 apps.json) \
+      --build-arg=PATCHES_JSON_BASE64=$(base64 -w 0 patches.json) \
+      --tag=asia.gcr.io/$PROJECT_ID/erpnext:$TAG_NAME \
+      --tag=asia.gcr.io/$PROJECT_ID/erpnext \
+      --file=frappe_docker/images/custom/Containerfile \
+      frappe_docker
 
 substitutions:
-  _FRAPPE_VERSION: v14.21.0
-  _ERPNEXT_VERSION: v14.11.1
-  _REGISTRY_PREFIX: frappe
+  _BUILD_BRANCH: feat-patch
+  _FRAPPE_VERSION: v14.26.1
 
 timeout: 1800s
 images:
-- asia.gcr.io/$PROJECT_ID/erpnext-worker:$TAG_NAME
-- asia.gcr.io/$PROJECT_ID/erpnext-worker:latest
-- asia.gcr.io/$PROJECT_ID/erpnext-nginx:$TAG_NAME
-- asia.gcr.io/$PROJECT_ID/erpnext-nginx:latest
+- asia.gcr.io/$PROJECT_ID/erpnext:$TAG_NAME
+- asia.gcr.io/$PROJECT_ID/erpnext:latest
