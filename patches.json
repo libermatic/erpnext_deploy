@@ -10,5 +10,11 @@
     "pattern": "s/frappe.delete_doc('Patient Medical Record', record, force=1)/frappe.delete_doc('Patient Medical Record', record, force=1, ignore_permissions=True)/",
     "app": "healthcare",
     "path": "healthcare/doctype/patient_history_settings/patient_history_settings.py"
+  },
+  {
+    "message": "set_df_property not refreshing child table field. Remove after frappe/frappe#19732 is backported",
+    "pattern": "s/].refresh_field(fieldname)/].refresh_field(table_field)/",
+    "app": "frappe",
+    "path": "public/js/frappe/form/form.js"
   }
 ]
