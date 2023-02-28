@@ -16,6 +16,10 @@
     "branch": "v14.0.0"
   },
   {
+    "url": "https://github.com/libermatic/gg_custom.git",
+    "branch": "v14.2.0"
+  },
+  {
     "url": "https://github.com/libermatic/iah.git",
     "branch": "v14.3.0"
   }

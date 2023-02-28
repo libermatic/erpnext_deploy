@@ -10,6 +10,7 @@ is independent of upstream and set incrementally here.
 - erpnext
 - payments
 - posx
+- gg_custom
 - healthcare
 - iah
 
