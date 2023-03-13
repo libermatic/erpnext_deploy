@@ -16,6 +16,10 @@
     "branch": "v14.0.0"
   },
   {
+    "url": "https://github.com/libermatic/gwi_customization.git",
+    "branch": "v14.0.0"
+  },
+  {
     "url": "https://github.com/libermatic/ab_custom.git",
     "branch": "v14.0.0"
   },
