@@ -1,5 +1,11 @@
 [
   {
+    "message": "Show past dates during booking",
+    "pattern": "s/min_date: new Date(frappe.datetime.get_today())//",
+    "app": "healthcare",
+    "path": "healthcare/doctype/patient_appointment/patient_appointment.js"
+  },
+  {
     "message": "Fix unable to cancel some documents",
     "pattern": "s/frappe.delete_doc('Patient Medical Record', record, force=1)/frappe.delete_doc('Patient Medical Record', record, force=1, ignore_permissions=True)/",
     "app": "healthcare",
