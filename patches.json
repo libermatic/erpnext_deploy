@@ -6,6 +6,12 @@
     "path": "healthcare/doctype/patient_appointment/patient_appointment.js"
   },
   {
+    "message": "Allow booking past appointments",
+    "pattern": "s/(now.format(\\\"YYYY-MM-DD\\\") == appointment_date) && slot_start_time.isBefore(now)/false/",
+    "app": "healthcare",
+    "path": "healthcare/doctype/patient_appointment/patient_appointment.js"
+  },
+  {
     "message": "Fix unable to cancel some documents",
     "pattern": "s/frappe.delete_doc('Patient Medical Record', record, force=1)/frappe.delete_doc('Patient Medical Record', record, force=1, ignore_permissions=True)/",
     "app": "healthcare",
