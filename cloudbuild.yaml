@@ -17,7 +17,7 @@ steps:
 
 substitutions:
   _BUILD_BRANCH: feat-patch
-  _FRAPPE_VERSION: v14.29.1
+  _FRAPPE_VERSION: v14.31.0
 
 timeout: 1800s
 images:
