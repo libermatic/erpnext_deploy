@@ -1,11 +1,11 @@
 [
   {
     "url": "https://github.com/frappe/payments.git",
-    "branch": "develop"
+    "branch": "version-14"
   },
   {
     "url": "https://github.com/frappe/erpnext.git",
-    "branch": "v14.20.1"
+    "branch": "v14.20.2"
   },
   {
     "url": "https://github.com/frappe/health.git",
