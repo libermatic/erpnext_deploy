@@ -23,19 +23,20 @@ List of apps to install. `branch` can also be a tag. eg.
 ```json
 [
   {
-    "repo": "https://github.com/libermatic/frappe_sentry.git",
+    "url": "https://github.com/libermatic/frappe_sentry.git",
     "branch": "v13.0.1"
   }
 ]
 ```
 
-### patches.json\_
+### _patches.json_
 
 Patches to be `sed` in upstream code. eg.
 
 ```json
 [
   {
+    "message": "Fix undefined method call",
     "pattern": "s/el.getBoundingClientRect()/\\!el ? 0 : el.getBoundingClientRect()/",
     "app": "frappe",
     "filepath": "public/js/frappe/views/image/image_view.js"
