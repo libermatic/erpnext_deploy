@@ -9,6 +9,7 @@ is independent of upstream and set incrementally here.
 - frappe
 - erpnext
 - payments
+- hrms
 - posx
 - gg_custom
 - healthcare
