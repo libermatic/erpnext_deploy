@@ -5,11 +5,11 @@
   },
   {
     "url": "https://github.com/frappe/erpnext.git",
-    "branch": "v14.41.2"
+    "branch": "v14.43.0"
   },
   {
     "url": "https://github.com/frappe/hrms.git",
-    "branch": "v14.12.1"
+    "branch": "v14.13.0"
   },
   {
     "url": "https://github.com/frappe/health.git",
@@ -17,7 +17,7 @@
   },
   {
     "url": "https://github.com/resilient-tech/india-compliance.git",
-    "branch": "v14.16.2"
+    "branch": "v14.16.3"
   },
   {
     "url": "https://github.com/libermatic/posx.git",
@@ -29,7 +29,7 @@
   },
   {
     "url": "https://github.com/libermatic/psd_customization.git",
-    "branch": "v14.0.0"
+    "branch": "v14.0.1"
   },
   {
     "url": "https://github.com/libermatic/self_custom.git",
