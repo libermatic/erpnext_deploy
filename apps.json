@@ -5,11 +5,11 @@
   },
   {
     "url": "https://github.com/frappe/erpnext.git",
-    "branch": "v14.71.0"
+    "branch": "v14.72.2"
   },
   {
     "url": "https://github.com/frappe/hrms.git",
-    "branch": "v14.29.3"
+    "branch": "v14.30.0"
   },
   {
     "url": "https://github.com/frappe/health.git",
@@ -49,6 +49,6 @@
   },
   {
     "url": "https://github.com/libermatic/iah.git",
-    "branch": "v14.4.1"
+    "branch": "v14.4.2"
   }
 ]
