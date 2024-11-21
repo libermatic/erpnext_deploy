@@ -1,25 +1,25 @@
 steps:
-- name: gcr.io/cloud-builders/docker
-  entrypoint: bash
-  args:
-  - -c
-  - |
-    git clone --depth 1 --branch $_BUILD_BRANCH https://github.com/sunhoww/frappe_docker.git && \
-    docker build \
-      --build-arg=FRAPPE_PATH=https://github.com/frappe/frappe \
-      --build-arg=FRAPPE_BRANCH=$_FRAPPE_VERSION \
-      --build-arg=APPS_JSON_BASE64=$(base64 -w 0 apps.json) \
-      --build-arg=PATCHES_JSON_BASE64=$(base64 -w 0 patches.json) \
-      --tag=asia.gcr.io/$PROJECT_ID/erpnext:$TAG_NAME \
-      --tag=asia.gcr.io/$PROJECT_ID/erpnext \
-      --file=frappe_docker/images/custom/Containerfile \
-      frappe_docker
+  - name: gcr.io/cloud-builders/docker
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        git clone --depth 1 --branch $_BUILD_BRANCH https://github.com/sunhoww/frappe_docker.git && \
+        docker build \
+          --build-arg=FRAPPE_PATH=https://github.com/frappe/frappe \
+          --build-arg=FRAPPE_BRANCH=$_FRAPPE_VERSION \
+          --build-arg=APPS_JSON_BASE64=$(base64 -w 0 apps.json) \
+          --build-arg=PATCHES_JSON_BASE64=$(base64 -w 0 patches.json) \
+          --tag=asia.gcr.io/$PROJECT_ID/erpnext:$TAG_NAME \
+          --tag=asia.gcr.io/$PROJECT_ID/erpnext \
+          --file=frappe_docker/images/custom/Containerfile \
+          frappe_docker
 
 substitutions:
   _BUILD_BRANCH: feat-patch
-  _FRAPPE_VERSION: v14.81.0
+  _FRAPPE_VERSION: v14.85.2
 
 timeout: 1800s
 images:
-- asia.gcr.io/$PROJECT_ID/erpnext:$TAG_NAME
-- asia.gcr.io/$PROJECT_ID/erpnext:latest
+  - asia.gcr.io/$PROJECT_ID/erpnext:$TAG_NAME
+  - asia.gcr.io/$PROJECT_ID/erpnext:latest
