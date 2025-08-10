@@ -4,6 +4,10 @@
     "branch": "v15.74.0"
   },
   {
+    "url": "https://github.com/frappe/payments.git",
+    "branch": "version-15"
+  },
+  {
     "url": "https://github.com/frappe/hrms.git",
     "branch": "v15.49.0"
   },
