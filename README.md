@@ -6,14 +6,18 @@ is independent of upstream and set incrementally here.
 
 ## apps in image
 
-- frappe
-- erpnext
-- payments
-- hrms
-- posx
-- gg_custom
-- healthcare
-- iah
+- [frappe/frappe](https://github.com/frappe/frappe)
+- [frappe/erpnext](https://github.com/frappe/erpnext)
+- [frappe/payments](https://github.com/frappe/payments)
+- [frappe/hrms](https://github.com/frappe/hrms)
+- [earthians/marley](https://github.com/earthians/marley)
+- [resilient-tech/india-compliance](https://github.com/resilient-tech/india-compliance)
+- [libermatic/gwi_customization](https://github.com/libermatic/gwi_customization)
+- [libermatic/psd_customization](https://github.com/libermatic/psd_customization)
+- [libermatic/self_custom](https://github.com/libermatic/self_custom)
+- [libermatic/vn_custom](https://github.com/libermatic/vn_custom)
+- [libermatic/gg_custom](https://github.com/libermatic/gg_custom)
+- [libermatic/iah](https://github.com/libermatic/iah)
 
 ## Configuration
 
