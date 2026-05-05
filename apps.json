@@ -1,7 +1,7 @@
 [
   {
     "url": "https://github.com/frappe/erpnext.git",
-    "branch": "v15.81.3"
+    "branch": "v15.82.2"
   },
   {
     "url": "https://github.com/frappe/payments.git",
@@ -9,7 +9,7 @@
   },
   {
     "url": "https://github.com/frappe/hrms.git",
-    "branch": "v15.50.3"
+    "branch": "v15.51.0"
   },
   {
     "url": "https://github.com/earthians/marley.git",
@@ -17,7 +17,7 @@
   },
   {
     "url": "https://github.com/resilient-tech/india-compliance.git",
-    "branch": "v15.23.0"
+    "branch": "v15.23.2"
   },
   {
     "url": "https://github.com/libermatic/gwi_customization.git",
