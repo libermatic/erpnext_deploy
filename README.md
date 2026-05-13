@@ -1,6 +1,6 @@
 # erpnext_deploy
 
-The repo tags and as a consequence the built image tags follow upstream **erpnext**
+The repo tags and as a consequence the built image tags follow upstream **frappe**
 version. The `major`.`minor` versions will always remain the same. The `patch` version
 is independent of upstream and set incrementally here.
 
